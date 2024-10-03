@@ -42,8 +42,10 @@ public class Controlador {
 				
 				File directori = new File(vista.getTxtIntroduixDirectori().getText());
 				String paraulaBuscar = vista.getTxtBuscar().getText();
+				boolean respetarMayuscules = vista.getChkRespetarMayuscules().isSelected();
+				boolean respetarAcentos = vista.getChkRespetarAcentos().isSelected();
 				
-				vista.getTxaEstructuraDirectori().setText(model.obtainEstructuraDirectori(directori, paraulaBuscar));
+				vista.getTxaEstructuraDirectori().setText(model.obtainEstructuraDirectori(directori, paraulaBuscar, respetarMayuscules, respetarAcentos));
 			}
 		});
 	}
