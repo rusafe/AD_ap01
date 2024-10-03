@@ -24,6 +24,9 @@ public class Vista extends JFrame {
 	private JButton btnBuscar;
 	private JCheckBox chkRespetarMayuscules;
 	private JCheckBox chkRespetarAcentos;
+	private JLabel lblReemplazar;
+	private JTextField txtReemplazar;
+	private JButton btnReemplazar;
 
 	public Vista() {
 		initComponents();
@@ -85,12 +88,29 @@ public class Vista extends JFrame {
 		contentPane.add(lblBuscar);
 		
 		chkRespetarMayuscules = new JCheckBox("Respetar mayuscules");
-		chkRespetarMayuscules.setBounds(396, 461, 142, 23);
+		chkRespetarMayuscules.setBounds(396, 461, 157, 23);
 		contentPane.add(chkRespetarMayuscules);
 		
 		chkRespetarAcentos = new JCheckBox("Respetar acentos");
-		chkRespetarAcentos.setBounds(540, 461, 131, 23);
+		chkRespetarAcentos.setBounds(555, 461, 131, 23);
 		contentPane.add(chkRespetarAcentos);
+		
+		lblReemplazar = new JLabel("Reemplazar:");
+		lblReemplazar.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblReemplazar.setBounds(24, 496, 131, 55);
+		contentPane.add(lblReemplazar);
+		
+		txtReemplazar = new JTextField();
+		txtReemplazar.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		txtReemplazar.setColumns(10);
+		txtReemplazar.setBounds(165, 507, 175, 33);
+		contentPane.add(txtReemplazar);
+		
+		btnReemplazar = new JButton("Reemplazar");
+		btnReemplazar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnReemplazar.setBackground(Color.LIGHT_GRAY);
+		btnReemplazar.setBounds(350, 507, 123, 33);
+		contentPane.add(btnReemplazar);
 		
 		setVisible(true);
 	}
@@ -121,5 +141,13 @@ public class Vista extends JFrame {
 
 	public JCheckBox getChkRespetarAcentos() {
 		return chkRespetarAcentos;
+	}
+	
+	public JTextField getTxtReemplazar() {
+		return txtReemplazar;
+	}
+
+	public JButton getBtnReemplazar() {
+		return btnReemplazar;
 	}
 }
