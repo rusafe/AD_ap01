@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.JScrollPane;
+import javax.swing.JCheckBox;
 
 public class Vista extends JFrame {
 
@@ -17,6 +19,11 @@ public class Vista extends JFrame {
 	private JTextField txtIntroduixDirectori;
 	private JTextArea txaEstructuraDirectori;
 	private JButton btnEstructura;
+	private JScrollPane scrollPane;
+	private JTextField txtBuscar;
+	private JButton btnBuscar;
+	private JCheckBox chkRespetarMayuscules;
+	private JCheckBox chkRespetarAcentos;
 
 	public Vista() {
 		initComponents();
@@ -24,7 +31,7 @@ public class Vista extends JFrame {
 	
 	public void initComponents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 710, 483);
+		setBounds(100, 100, 804, 612);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -44,18 +51,46 @@ public class Vista extends JFrame {
 		
 		JLabel lblEstructuraDirectori = new JLabel("Estructura de directoris:");
 		lblEstructuraDirectori.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblEstructuraDirectori.setBounds(334, 89, 233, 33);
+		lblEstructuraDirectori.setBounds(24, 87, 233, 33);
 		contentPane.add(lblEstructuraDirectori);
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(24, 131, 647, 302);
+		contentPane.add(scrollPane);
+		
 		txaEstructuraDirectori = new JTextArea();
-		txaEstructuraDirectori.setBounds(334, 131, 337, 302);
-		contentPane.add(txaEstructuraDirectori);
+		scrollPane.setViewportView(txaEstructuraDirectori);
 		
 		btnEstructura = new JButton("Estructura");
 		btnEstructura.setBackground(new Color(192, 192, 192));
 		btnEstructura.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnEstructura.setBounds(573, 22, 98, 33);
 		contentPane.add(btnEstructura);
+		
+		txtBuscar = new JTextField();
+		txtBuscar.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		txtBuscar.setColumns(10);
+		txtBuscar.setBounds(107, 455, 175, 33);
+		contentPane.add(txtBuscar);
+		
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBuscar.setBackground(Color.LIGHT_GRAY);
+		btnBuscar.setBounds(290, 456, 98, 33);
+		contentPane.add(btnBuscar);
+		
+		JLabel lblBuscar = new JLabel("Buscar:");
+		lblBuscar.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblBuscar.setBounds(24, 444, 73, 55);
+		contentPane.add(lblBuscar);
+		
+		chkRespetarMayuscules = new JCheckBox("Respetar mayuscules");
+		chkRespetarMayuscules.setBounds(396, 461, 142, 23);
+		contentPane.add(chkRespetarMayuscules);
+		
+		chkRespetarAcentos = new JCheckBox("Respetar acentos");
+		chkRespetarAcentos.setBounds(540, 461, 131, 23);
+		contentPane.add(chkRespetarAcentos);
 		
 		setVisible(true);
 	}
@@ -70,5 +105,21 @@ public class Vista extends JFrame {
 
 	public JButton getBtnEstructura() {
 		return btnEstructura;
+	}
+	
+	public JTextField getTxtBuscar() {
+		return txtBuscar;
+	}
+	
+	public JButton getBtnBuscar() {
+		return btnBuscar;
+	}
+
+	public JCheckBox getChkRespetarMayuscules() {
+		return chkRespetarMayuscules;
+	}
+
+	public JCheckBox getChkRespetarAcentos() {
+		return chkRespetarAcentos;
 	}
 }
