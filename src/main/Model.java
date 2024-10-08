@@ -113,10 +113,7 @@ public class Model {
 	}
 	
 	private int cantitatCoincidencies(File archiu, String paraula, boolean respetarMayuscules, boolean respetarAcentos) {
-		int coincidencies = 0;
 		String text;
-		
-		
 		try {
 			text = llegirArchiu(archiu);
 		} catch (Exception e) {
@@ -132,6 +129,8 @@ public class Model {
 			text = llevarAcento(text);
 		}
 		
+		int coincidencies = 0;
+
 		int indicePosibleCoincidencia = text.indexOf(paraula.charAt(0));
 		String posibleCoincidencia;
 		while(indicePosibleCoincidencia != -1) {
