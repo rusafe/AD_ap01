@@ -149,38 +149,55 @@ public class Model {
 	}
 	
 	private int reemplazar(File archiu, String paraulaReemplazar, String paraulaNova, boolean respetarMayuscules, boolean respetarAcentos) {
-		int cantitatReemplazos = cantitatCoincidencies(archiu, paraulaReemplazar, respetarMayuscules, respetarAcentos);
-
-		if(cantitatReemplazos == 0)
-			return 0;
-		
 		String ruta = archiu.getParentFile().getPath();
 		String nouNom = String.format("MOD_%s", archiu.getName());
 		
-		String text; 
+		String textReemplazar;
+		String textComparar;
+		int cantitatReemplazos = 0;
+		int desplasamentPerCanviParaula = 0;
 		
 		try {
-			text = llegirArchiu(archiu);			
+			textReemplazar = llegirArchiu(archiu);
+			textComparar = textReemplazar;
 		} catch (Exception e) {
 			return 0;
 		}
 		
 		if(!respetarMayuscules) {
 			paraulaReemplazar = paraulaReemplazar.toLowerCase();
-			text = text.toLowerCase();
+			textComparar = textComparar.toLowerCase();
 		}
 		if(!respetarAcentos) {
 			paraulaReemplazar = llevarAcento(paraulaReemplazar);
-			text = llevarAcento(text);
+			textComparar = llevarAcento(textComparar);
 		}
 		
-		String textReemplazat = text.replaceAll(paraulaReemplazar, paraulaNova);
+		int indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0));
+		String posibleCoincidencia;
+		while(indicePosibleCoincidencia != -1) {
+			if(indicePosibleCoincidencia + paraulaReemplazar.length() > textComparar.length())
+				break;
+			
+			posibleCoincidencia = textComparar.substring(indicePosibleCoincidencia, indicePosibleCoincidencia + paraulaReemplazar.length());
+			
+			if(paraulaReemplazar.equals(posibleCoincidencia)) {
+				textReemplazar = textReemplazar.substring(0, indicePosibleCoincidencia + desplasamentPerCanviParaula) + paraulaNova + textReemplazar.substring(indicePosibleCoincidencia + paraulaReemplazar.length() + desplasamentPerCanviParaula);
+				desplasamentPerCanviParaula += paraulaNova.length() - paraulaReemplazar.length();
+				cantitatReemplazos++;
+			}
+			
+			indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0), indicePosibleCoincidencia + 1);
+		}
+		
+		if(cantitatReemplazos == 0)
+			return 0;
 
 		try {
 			FileWriter fw = new FileWriter(String.format("%s%s%s", ruta, File.separator, nouNom));	
 			BufferedWriter bw = new BufferedWriter(fw);
 			
-			bw.write(textReemplazat);
+			bw.write(textReemplazar);
 			
 			bw.close();
 			fw.close();
