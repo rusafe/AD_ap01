@@ -173,21 +173,27 @@ public class Model {
 			textComparar = llevarAcento(textComparar);
 		}
 		
-		int indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0));
-		String posibleCoincidencia;
-		while(indicePosibleCoincidencia != -1) {
-			if(indicePosibleCoincidencia + paraulaReemplazar.length() > textComparar.length())
-				break;
-			
-			posibleCoincidencia = textComparar.substring(indicePosibleCoincidencia, indicePosibleCoincidencia + paraulaReemplazar.length());
-			
-			if(paraulaReemplazar.equals(posibleCoincidencia)) {
-				textReemplazar = textReemplazar.substring(0, indicePosibleCoincidencia + desplasamentPerCanviParaula) + paraulaNova + textReemplazar.substring(indicePosibleCoincidencia + paraulaReemplazar.length() + desplasamentPerCanviParaula);
-				desplasamentPerCanviParaula += paraulaNova.length() - paraulaReemplazar.length();
-				cantitatReemplazos++;
+		if(textReemplazar.equals(textComparar)) {
+			textReemplazar = textReemplazar.replaceAll(paraulaReemplazar, paraulaNova);
+			cantitatReemplazos = cantitatCoincidencies(archiu, paraulaReemplazar, respetarMayuscules, respetarAcentos);
+		}
+		else {
+			int indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0));
+			String posibleCoincidencia;
+			while(indicePosibleCoincidencia != -1) {
+				if(indicePosibleCoincidencia + paraulaReemplazar.length() > textComparar.length())
+					break;
+				
+				posibleCoincidencia = textComparar.substring(indicePosibleCoincidencia, indicePosibleCoincidencia + paraulaReemplazar.length());
+				
+				if(paraulaReemplazar.equals(posibleCoincidencia)) {
+					textReemplazar = textReemplazar.substring(0, indicePosibleCoincidencia + desplasamentPerCanviParaula) + paraulaNova + textReemplazar.substring(indicePosibleCoincidencia + paraulaReemplazar.length() + desplasamentPerCanviParaula);
+					desplasamentPerCanviParaula += paraulaNova.length() - paraulaReemplazar.length();
+					cantitatReemplazos++;
+				}
+				
+				indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0), indicePosibleCoincidencia + 1);
 			}
-			
-			indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0), indicePosibleCoincidencia + 1);
 		}
 		
 		if(cantitatReemplazos == 0)
