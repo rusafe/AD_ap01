@@ -28,7 +28,7 @@ public class Model {
 	}
 	
 	private String estructuraDirectori(File directori, int profunditat) {
-		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		String estructura = "";
 		
 		File[] continguts = directori.listFiles();
@@ -45,7 +45,7 @@ public class Model {
 				}
 			}
 			else {
-				estructura += String.format("%s%s %s (%.1f KB - %s)", System.lineSeparator(), anyadirSeparacioRuta(profunditat), archiu.getName(), transformarAKilobytes(archiu.length()), formatoFecha.format(new Date()));
+				estructura += String.format("%s%s %s (%.1f KB - %s)", System.lineSeparator(), anyadirSeparacioRuta(profunditat), archiu.getName(), transformarAKilobytes(archiu.length()), formatoFecha.format(archiu.lastModified()));
 			}
 		}
 		
