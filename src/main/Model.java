@@ -10,16 +10,20 @@ import java.text.Normalizer.Form;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+
 public class Model {
-	public String obtainEstructuraDirectori(File directori) {
+	public String obtindreEstructuraDirectori(File directori) {
 		return String.format("%s%s", directori.getName(), estructuraDirectori(directori, 0));
 	}
 	
-	public String obtainEstructuraDirectori(File directori, String paraula, boolean respetarMayuscules, boolean respetarAcentos) {
+	public String obtindreEstructuraDirectori(File directori, String paraula, boolean respetarMayuscules, boolean respetarAcentos) {
 		return String.format("%s%s", directori.getName(), estructuraDirectori(directori, 0, paraula, respetarMayuscules, respetarAcentos));
 	}
 	
-	public String obtainEstructuraDirectori(File directori, String paraulaReemplazar, String paraulaNova, boolean respetarMayuscules, boolean respetarAcentos) {
+	public String obtindreEstructuraDirectori(File directori, String paraulaReemplazar, String paraulaNova, boolean respetarMayuscules, boolean respetarAcentos) {
 		return String.format("%s%s", directori.getName(), estructuraDirectori(directori, 0, paraulaReemplazar, paraulaNova, respetarMayuscules, respetarAcentos));
 	}
 	
@@ -115,7 +119,7 @@ public class Model {
 	private int cantitatCoincidencies(File archiu, String paraula, boolean respetarMayuscules, boolean respetarAcentos) {
 		String text;
 		try {
-			text = llegirArchiu(archiu);
+			text = archiu.getName().endsWith(".pdf") ? llegirPdf(archiu) : llegirArchiu(archiu);
 		} catch (Exception e) {
 			return 0;
 		}
@@ -172,28 +176,22 @@ public class Model {
 			paraulaReemplazar = llevarAcento(paraulaReemplazar);
 			textComparar = llevarAcento(textComparar);
 		}
-		
-		if(textReemplazar.equals(textComparar)) {
-			textReemplazar = textReemplazar.replaceAll(paraulaReemplazar, paraulaNova);
-			cantitatReemplazos = cantitatCoincidencies(archiu, paraulaReemplazar, respetarMayuscules, respetarAcentos);
-		}
-		else {
-			int indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0));
-			String posibleCoincidencia;
-			while(indicePosibleCoincidencia != -1) {
-				if(indicePosibleCoincidencia + paraulaReemplazar.length() > textComparar.length())
-					break;
-				
-				posibleCoincidencia = textComparar.substring(indicePosibleCoincidencia, indicePosibleCoincidencia + paraulaReemplazar.length());
-				
-				if(paraulaReemplazar.equals(posibleCoincidencia)) {
-					textReemplazar = textReemplazar.substring(0, indicePosibleCoincidencia + desplasamentPerCanviParaula) + paraulaNova + textReemplazar.substring(indicePosibleCoincidencia + paraulaReemplazar.length() + desplasamentPerCanviParaula);
-					desplasamentPerCanviParaula += paraulaNova.length() - paraulaReemplazar.length();
-					cantitatReemplazos++;
-				}
-				
-				indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0), indicePosibleCoincidencia + 1);
+
+		int indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0));
+		String posibleCoincidencia;
+		while(indicePosibleCoincidencia != -1) {
+			if(indicePosibleCoincidencia + paraulaReemplazar.length() > textComparar.length())
+				break;
+			
+			posibleCoincidencia = textComparar.substring(indicePosibleCoincidencia, indicePosibleCoincidencia + paraulaReemplazar.length());
+			
+			if(paraulaReemplazar.equals(posibleCoincidencia)) {
+				textReemplazar = textReemplazar.substring(0, indicePosibleCoincidencia + desplasamentPerCanviParaula) + paraulaNova + textReemplazar.substring(indicePosibleCoincidencia + paraulaReemplazar.length() + desplasamentPerCanviParaula);
+				desplasamentPerCanviParaula += paraulaNova.length() - paraulaReemplazar.length();
+				cantitatReemplazos++;
 			}
+			
+			indicePosibleCoincidencia = textComparar.indexOf(paraulaReemplazar.charAt(0), indicePosibleCoincidencia + 1);
 		}
 		
 		if(cantitatReemplazos == 0)
@@ -216,6 +214,7 @@ public class Model {
 	
 	private String llegirArchiu(File archiu) throws Exception {
 		String text = "";
+		
 		try {
 			FileReader fr = new FileReader(archiu);
 			BufferedReader br = new BufferedReader(fr);
@@ -233,6 +232,22 @@ public class Model {
 		} catch (Exception e) {
 			throw e;
 		}
+		
+		return text;
+	}
+	
+	private String llegirPdf(File archiu) throws Exception {
+		String text = "";
+		
+		try {
+			PDDocument pdf = Loader.loadPDF(archiu);
+			PDFTextStripper pdfTextStripper = new PDFTextStripper();
+			text = pdfTextStripper.getText(pdf);
+			pdf.close();	
+		} catch (Exception e) {
+			throw e;
+		}
+		
 		return text;
 	}
 	

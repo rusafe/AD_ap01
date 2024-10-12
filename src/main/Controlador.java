@@ -26,7 +26,7 @@ public class Controlador {
 				
 				File directori = new File(vista.getTxtIntroduixDirectori().getText());
 				
-				vista.getTxaEstructuraDirectori().setText(model.obtainEstructuraDirectori(directori));
+				vista.getTxaEstructuraDirectori().setText(model.obtindreEstructuraDirectori(directori));
 			}
 		});
 		vista.getBtnBuscar().addActionListener(new ActionListener() {
@@ -45,7 +45,7 @@ public class Controlador {
 				boolean respetarMayuscules = vista.getChkRespetarMayuscules().isSelected();
 				boolean respetarAcentos = vista.getChkRespetarAcentos().isSelected();
 				
-				vista.getTxaEstructuraDirectori().setText(model.obtainEstructuraDirectori(directori, paraulaBuscar, respetarMayuscules, respetarAcentos));
+				vista.getTxaEstructuraDirectori().setText(model.obtindreEstructuraDirectori(directori, paraulaBuscar, respetarMayuscules, respetarAcentos));
 			}
 		});
 		vista.getBtnReemplazar().addActionListener(new ActionListener() {
@@ -69,7 +69,7 @@ public class Controlador {
 				boolean respetarMayuscules = vista.getChkRespetarMayuscules().isSelected();
 				boolean respetarAcentos = vista.getChkRespetarAcentos().isSelected();
 				
-				vista.getTxaEstructuraDirectori().setText(model.obtainEstructuraDirectori(directori, paraulaReemplazar, paraulaNova, respetarMayuscules, respetarAcentos));
+				vista.getTxaEstructuraDirectori().setText(model.obtindreEstructuraDirectori(directori, paraulaReemplazar, paraulaNova, respetarMayuscules, respetarAcentos));
 			}
 		});
 	}
