@@ -8,25 +8,52 @@ import java.io.FileWriter;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 public class Model {
+	/**
+	 * Métode per a obtindre la estructura de un directori de forma recursiva i obtindre informacio dels fichers que es troben en els directoris
+	 * @param directori Directori del cual obtindre la estructura
+	 * @return La estructura del directori introduit
+	 */
 	public String obtindreEstructuraDirectori(File directori) {
 		return String.format("%s%s", directori.getName(), estructuraDirectori(directori, 0));
 	}
 	
+	/**
+	 * Métode per a obtindre la estructura de un directori de forma recursiva i buscar coincidencies de textos en els fichers que es troben en els directoris
+	 * @param directori Directori del cual obtindre la estructura
+	 * @param paraula Paraula a buscar
+	 * @param respetarMayuscules Si hi ha que respetar les mayuscules al buscar
+	 * @param respetarAcentos Si hi ha que respetar els acentos al buscar
+	 * @return La estructura del directori introduit
+	 */
 	public String obtindreEstructuraDirectori(File directori, String paraula, boolean respetarMayuscules, boolean respetarAcentos) {
 		return String.format("%s%s", directori.getName(), estructuraDirectori(directori, 0, paraula, respetarMayuscules, respetarAcentos));
 	}
 	
+	/**
+	 * Métode per a obtindre la estructura de un directori de forma recursiva i reemplazar textos dels fichers que es troben en els directoris
+	 * @param directori Directori del cual obtindre la estructura
+	 * @param paraulaReemplazar Paraula que es va a sustituir en els fichers
+	 * @param paraulaNova Paraula que es va posar en els fichers
+	 * @param respetarMayuscules Si hi ha que respetar les mayuscules al buscar y reemplazar
+	 * @param respetarAcentos Si hi ha que respetar els acentos al buscar y reemplazar
+	 * @return La estructura del directori introduit
+	 */
 	public String obtindreEstructuraDirectori(File directori, String paraulaReemplazar, String paraulaNova, boolean respetarMayuscules, boolean respetarAcentos) {
 		return String.format("%s%s", directori.getName(), estructuraDirectori(directori, 0, paraulaReemplazar, paraulaNova, respetarMayuscules, respetarAcentos));
 	}
 	
+	/**
+	 * Métode per a obtindre la estructura de un directori de forma recursiva i obtindre informacio dels fichers que es troben en els directoris
+	 * @param directori Directori del cual obtindre la estructura
+	 * @param profunditat Profunditat a la cual es troba desde el directori base
+	 * @return La estructura del directori introduit
+	 */
 	private String estructuraDirectori(File directori, int profunditat) {
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		String estructura = "";
@@ -52,6 +79,15 @@ public class Model {
 		return estructura;
 	}
 	
+	/**
+	 * Métode per a obtindre la estructura de un directori de forma recursiva i buscar coincidencies de textos en els fichers que es troben en els directoris
+	 * @param directori Directori del cual obtindre la estructura
+	 * @param profunditat Profunditat a la cual es troba desde el directori base
+	 * @param paraula Paraula a buscar
+	 * @param respetarMayuscules Si hi ha que respetar les mayuscules al buscar
+	 * @param respetarAcentos Si hi ha que respetar els acentos al buscar
+	 * @return La estructura del directori introduit
+	 */
 	private String estructuraDirectori(File directori, int profunditat, String paraula, boolean respetarMayuscules, boolean respetarAcentos) {
 		String estructura = "";
 		
@@ -76,6 +112,16 @@ public class Model {
 		return estructura;
 	}
 	
+	/**
+	 * Métode per a obtindre la estructura de un directori de forma recursiva i reemplazar textos dels fichers que es troben en els directoris
+	 * @param directori Directori del cual obtindre la estructura
+	 * @param profunditat Profunditat a la cual es troba desde el directori base
+	 * @param paraulaReemplazar Paraula que es va a sustituir en els fichers
+	 * @param paraulaNova Paraula que es va posar en els fichers
+	 * @param respetarMayuscules Si hi ha que respetar les mayuscules al buscar y reemplazar
+	 * @param respetarAcentos Si hi ha que respetar els acentos al buscar y reemplazar
+	 * @return La estructura del directori introduit
+	 */
 	private String estructuraDirectori(File directori, int profunditat, String paraulaReemplazar, String paraulaNova, boolean respetarMayuscules, boolean respetarAcentos) {
 		String estructura = "";
 		
@@ -100,6 +146,11 @@ public class Model {
 		return estructura;
 	}
 	
+	/**
+	 * Métode que crea la separacio dels fichers/directoris en base a la profunditat que se troben del directori base
+	 * @param profunditat Profunditat desde el directori base
+	 * @return La separacio que es te que anyadir
+	 */
 	private String anyadirSeparacioRuta(int profunditat) {
 		String separacio = "";
 		
@@ -112,10 +163,23 @@ public class Model {
 		return separacio;
 	}
 	
+	/**
+	 * Métode que transforma bytes a kilobytes
+	 * @param bytes Cantitat en bytes
+	 * @return Cantitat en kilobytes
+	 */
 	private float transformarAKilobytes(long bytes) {
 		return bytes / 1024f;
 	}
 	
+	/**
+	 * 
+	 * @param archiu Ficher en el cual es van a buscar les coincidencies
+	 * @param paraula Paraula a buscar
+	 * @param respetarMayuscules Si hi ha que respetar les mayuscules al buscar
+	 * @param respetarAcentos Si hi ha que respetar els acentos al buscar
+	 * @return Cantitat de coincidencies
+	 */
 	private int cantitatCoincidencies(File archiu, String paraula, boolean respetarMayuscules, boolean respetarAcentos) {
 		String text;
 		try {
@@ -152,6 +216,15 @@ public class Model {
 		return coincidencies;
 	}
 	
+	/**
+	 * Métode que crea una copia del ficher pasat y sustituix el text introduit per uno nou en la copia
+	 * @param archiu Ficher del cual es va a crear una copia i sustituir el text
+	 * @param paraulaReemplazar Paraula que es va a sustituir
+	 * @param paraulaNova Paraula que es va posar
+	 * @param respetarMayuscules Si hi ha que respetar les mayuscules al buscar y reemplazar
+	 * @param respetarAcentos Si hi ha que respetar els acentos al buscar y reemplazar
+	 * @return Cantitat de reemplazos
+	 */
 	private int reemplazar(File archiu, String paraulaReemplazar, String paraulaNova, boolean respetarMayuscules, boolean respetarAcentos) {
 		String ruta = archiu.getParentFile().getPath();
 		String nouNom = String.format("MOD_%s", archiu.getName());
@@ -212,6 +285,12 @@ public class Model {
 		return cantitatReemplazos;
 	}
 	
+	/**
+	 * Métode que llig y retorna el contingut de un archiu de text
+	 * @param archiu Objecte file que conté el archiu de text que es va a llegir
+	 * @return El contingut del archiu com un string
+	 * @throws Exception Error al llegir el archiu de text
+	 */
 	private String llegirArchiu(File archiu) throws Exception {
 		String text = "";
 		
@@ -236,6 +315,12 @@ public class Model {
 		return text;
 	}
 	
+	/**
+	 * Métode que llig y retorna el contingut de un pdf
+	 * @param archiu Objecte file que conté el pdf que es va a llegir
+	 * @return El contingut del pdf com un string
+	 * @throws Exception Error al llegir el pdf
+	 */
 	private String llegirPdf(File archiu) throws Exception {
 		String text = "";
 		
@@ -251,6 +336,11 @@ public class Model {
 		return text;
 	}
 	
+	/**
+	 * Métode que elimina els acentos de un text
+	 * @param paraula Text al cual eliminar els acentos
+	 * @return Text sense acentos
+	 */
 	private String llevarAcento(String paraula) {
 		return Normalizer.normalize(paraula, Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 	}
