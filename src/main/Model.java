@@ -13,6 +13,9 @@ import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
+/**
+ * Clase que conte la logica de l'aplicacio
+ */
 public class Model {
 	/**
 	 * Métode per a obtindre la estructura de un directori de forma recursiva i obtindre informacio dels fichers que es troben en els directoris
@@ -173,7 +176,7 @@ public class Model {
 	}
 	
 	/**
-	 * 
+	 * Métode que busca coincidencies de text en un ficher
 	 * @param archiu Ficher en el cual es van a buscar les coincidencies
 	 * @param paraula Paraula a buscar
 	 * @param respetarMayuscules Si hi ha que respetar les mayuscules al buscar
@@ -226,6 +229,9 @@ public class Model {
 	 * @return Cantitat de reemplazos
 	 */
 	private int reemplazar(File archiu, String paraulaReemplazar, String paraulaNova, boolean respetarMayuscules, boolean respetarAcentos) {
+		if(archiu.getName().endsWith(".pdf"))
+			return 0;
+		
 		String ruta = archiu.getParentFile().getPath();
 		String nouNom = String.format("MOD_%s", archiu.getName());
 		

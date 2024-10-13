@@ -6,16 +6,34 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Clase que contecta la Vista i el Model
+ */
 public class Controlador {
+	/**
+	 * Instancia del objecte Vista que conte la interfaz grafica
+	 */
 	Vista vista;
+	
+	/**
+	 * Instancia del objecte Model que conte la logica de la aplicacio
+	 */
 	Model model;
 	
+	/**
+	 * Constructor
+	 * @param vista Objecte Vista
+	 * @param model Objecte Model
+	 */
 	public Controlador(Vista vista, Model model) {
 		this.vista = vista;
 		this.model = model;
 		initEventHandlers();
 	}
 	
+	/**
+	 * Metode que crea els manejadors de eventos dels components de la interfaz grafica
+	 */
 	public void initEventHandlers() {
 		vista.getBtnEstructura().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
