@@ -81,7 +81,7 @@ public class Vista extends JFrame {
 	 */
 	public void initComponents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 804, 612);
+		setBounds(100, 100, 781, 612);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -90,18 +90,18 @@ public class Vista extends JFrame {
 		
 		JLabel lblIntroduixDirectori = new JLabel("Introduix directori:");
 		lblIntroduixDirectori.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblIntroduixDirectori.setBounds(24, 11, 181, 55);
+		lblIntroduixDirectori.setBounds(24, 11, 239, 55);
 		contentPane.add(lblIntroduixDirectori);
 		
 		txtIntroduixDirectori = new JTextField();
 		txtIntroduixDirectori.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		txtIntroduixDirectori.setBounds(212, 22, 355, 33);
+		txtIntroduixDirectori.setBounds(217, 23, 355, 33);
 		contentPane.add(txtIntroduixDirectori);
 		txtIntroduixDirectori.setColumns(10);
 		
 		JLabel lblEstructuraDirectori = new JLabel("Estructura de directoris:");
 		lblEstructuraDirectori.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblEstructuraDirectori.setBounds(24, 87, 233, 33);
+		lblEstructuraDirectori.setBounds(24, 87, 293, 33);
 		contentPane.add(lblEstructuraDirectori);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -114,7 +114,7 @@ public class Vista extends JFrame {
 		btnEstructura = new JButton("Estructura");
 		btnEstructura.setBackground(new Color(192, 192, 192));
 		btnEstructura.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnEstructura.setBounds(573, 22, 98, 33);
+		btnEstructura.setBounds(578, 23, 98, 33);
 		contentPane.add(btnEstructura);
 		
 		txtBuscar = new JTextField();
